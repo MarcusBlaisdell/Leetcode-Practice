@@ -2,7 +2,7 @@
 Leetcode 167
 Two sum II, array is sorted
 Hash map
-<Month>, <Day>, <Year>
+March 31, 2025
 '''
 
 def findIndexes(theArray, target):
