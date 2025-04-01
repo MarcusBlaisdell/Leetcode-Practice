@@ -2,6 +2,7 @@
 Leetcode 5
 Longest Palindromic substring
 April 01, 2025
+Middle-out approach
 '''
 
 # Function to find longest palindromic substring
@@ -21,7 +22,7 @@ def longestPalindrome(s: str) -> str:
         2 posibilities:
         1) the string is odd sized
         2) the string is even sized
-        This necessitates running it twice to catch all possibilities, 
+        This necessitates running it twice to catch all possibilities,
         once for odd case, and again for even case
         '''
         # Odd sized:
@@ -47,7 +48,10 @@ def longestPalindrome(s: str) -> str:
             i2 += 1
     return solution
 
+# Main function,
+# Define test strings, call function, report results
 def main() -> None:
+    # use an array of strings to test multiple cases:
     testStrings = [("babad", "bab or aba"),
                     ("cbbd", "bb"),
                     ("abccabbacdef", "cabbac"),
@@ -55,6 +59,7 @@ def main() -> None:
                     ("abccabbbacdef", "cabbbac"),
                     ("abccabbbbacdef", "cabbbbac")]
 
+    # test each case:
     for s, a in testStrings:
         answer = longestPalindrome(s)
         print("answer: ", answer)
