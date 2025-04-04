@@ -10,24 +10,26 @@ recursion?
 '''
 from typing import List
 
-def helpPerm():
-    # Solution, TBD:
-    # base case, only one int in list:
-    if len(s) == 1:
-        return s[0]
-
-    for i in s:
-        newS = s
-        temp = [i]
-        newS.pop(i)
-        helpPerm(newS)
-
 def getPerm(s: List[int]) -> List[List[int]]:
-    # store all possible solutions in a list
+    # create a list to store results:
     a = []
 
+    # base case:
+    if len(s) == 1:
+        return [s[:]]
 
+    # otherwise, for each character, remove it from the list,
+    # and pass the remainder to the recursive call:
+    for i in range(len(s)):
+        c = s.pop(0)
+        p = getPerm(s)
 
+        # build the list from the returns from the
+        # recursive calls:
+        for x in p:
+            x.append(c)
+        a.extend(p)
+        s.append(c)
 
     return a
 
