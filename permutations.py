@@ -16,9 +16,27 @@ def getPerm(s: List[int]) -> List[List[int]]:
 
     # base case:
     if len(s) == 1:
-        # not working to just return s,
-        # it does work if I use slicing and specify
-        # the whole range
+        '''
+        not working to just return s, or s[0]
+        it does work if I use slicing and specify
+        the whole range
+        Testing on console:
+        Create a list with just one int:
+        >>> intLista = [1]
+        View it:
+        >>> intLista
+        [1]
+        print as is, as part of a list:
+        >>> print([intLista])
+        [[1]]
+        compare with using slicing:
+        >>> print([intLista[0:]])
+        [[1]]
+        output is the same, so why can't I use [intLista]
+        and have to use [intLista[0:]]?
+        also works with:
+        [s[0:len(s)]]
+        '''
         return [s[0:]]
 
     # otherwise, for each character, remove it from the list,
