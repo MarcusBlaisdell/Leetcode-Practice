@@ -16,7 +16,10 @@ def getPerm(s: List[int]) -> List[List[int]]:
 
     # base case:
     if len(s) == 1:
-        return [s[:]]
+        # not working to just return s,
+        # it does work if I use slicing and specify
+        # the whole range
+        return [s[0:]]
 
     # otherwise, for each character, remove it from the list,
     # and pass the remainder to the recursive call:
