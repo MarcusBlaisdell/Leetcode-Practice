@@ -36,8 +36,13 @@ def getPerm(s: List[int]) -> List[List[int]]:
         and have to use [intLista[0:]]?
         also works with:
         [s[0:len(s)]]
+        Works with:
+        [[s[0]]]
+        Makes it a List[List[int]]
         '''
-        return [s[0:]]
+        #return [s[0:]] # This works
+        return [[s[0]]] # making it a List of a List also works
+        #return [[s]] # does not work
 
     # otherwise, for each character, remove it from the list,
     # and pass the remainder to the recursive call:
