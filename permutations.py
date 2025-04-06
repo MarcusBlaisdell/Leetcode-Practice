@@ -60,7 +60,7 @@ def getPerm(s: List[int]) -> List[List[int]]:
     return a
 
 def main() -> None:
-    input = [[1,2,3]]
+    input = [[1,2,3], [1,2,3,4]]
 
     for s in input:
         answer = getPerm(s)
