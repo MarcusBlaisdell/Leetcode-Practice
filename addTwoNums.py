@@ -14,58 +14,40 @@ E.G.
 4 + 6 = 10, store 0, carry the 1,
 2 + 5 = 7 + 1 = 8
 
-Need to read through each list to the end, could use a stack
 '''
 
+# This is the node class provided in the example:
 class ListNode:
     def __init__(self, val = 0, next = None):
         self.val = val
         self.next = next
 
 def addTwoNumbers(l1: ListNode, l2: ListNode) -> ListNode:
-    stack1 = []
-    stack2 = []
-    retNode = ListNode()
-
-    node1 = l1
-    stack1.append(node1.val)
-    while node1.next != None:
-        node1 = node1.next
-        stack1.append(node1.val)
-
-    node2 = l2
-    stack2.append(node2.val)
-    while node2.next != None:
-        node2 = node2.next
-        stack2.append(node2.val)
-
-    print("stack1: ", stack1)
-    print("stack2: ", stack2)
+    # To process and traverse a linked list, need two nodes:
+    # a root node, and a current node:
+    rootNode = ListNode()
+    curNode = rootNode
 
     carry = 0
 
-    add1 = stack1.pop()
-    add2 = stack2.pop()
-    val = (add1 + add2 + carry) % 10
-    carry = (add1 + add2) // 10
-    retNode.val = val
-    moveNode = retNode
-    nextNode = ListNode()
-    retNode.next = nextNode
+    #l1 and l2 may not be the same size:
+    while l1 or l2 or carry:
+        val1 = l1.val if l1 else 0
+        val2 = l2.val if l2 else 0
+        # set val:
+        curNode.val = (val1 + val2 + carry) % 10
+        # get new carry value:
+        carry = (val1 + val2 + carry) // 10
+        # create a new node, set it to current node's next:
+        curNode.next = ListNode()
+        # move to new node:
+        curNode = curNode.next
+        # increment input list(s):
+        l1 = l1.next if l1 else None
+        l2 = l2.next if l2 else None
 
-    for i in range(len(stack1)):
-
-        add1 = stack1.pop()
-        add2 = stack2.pop()
-        val = (add1 + add2 + carry) % 10
-        carry = (add1 + add2) // 10
-        nextNode.val = val
-        newNode = ListNode()
-        nextNode.next = newNode
-        nextNode = nextNode.next
-
-    return retNode
-
+    # return the root node:
+    return rootNode
 
 def main() -> None:
     node1 = ListNode(2)
@@ -76,10 +58,10 @@ def main() -> None:
     node2.next = ListNode(6)
     node2.next.next = ListNode(4)
 
-    retNode = addTwoNumbers(node1, node2)
-    while retNode.next != None:
-        print(retNode.val)
-        retNode = retNode.next
+    rootNode = addTwoNumbers(node1, node2)
+    while rootNode.next != None:
+        print(rootNode.val)
+        rootNode = rootNode.next
 
 if __name__=='__main__':
     main()
