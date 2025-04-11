@@ -47,19 +47,20 @@ Read through prerequisites list, populate Dependencies list
 '''
 from typing import List
 
-def finishHelp(d: List[List[int]], v: List[bool], c: int) -> bool:
-    print("c: ", c, ", d: ", d)
-    v[c] = True
+def finishHelp(d: List[List[int]], v: List[int], c: int) -> bool:
+    if c in v:
+        return False
+
+    v.append(c)
     #base case, list is empty, course is reachable:
     if not d[c]:
         return True
-    else: # given course c, check if it's reachable:
+    else:
+        # given course c, check if it's reachable:
         # Check all prerequisites for the course:
         for i in d[c]:
-            if v[c] == False:
-                a = finishHelp(d, v, d[c][0])
-            else:
-                return False
+            a = finishHelp(d, v, d[c][0])
+
             if a:
                 d[c].remove(d[c][0])
                 return True
@@ -69,19 +70,18 @@ def finishHelp(d: List[List[int]], v: List[bool], c: int) -> bool:
     # What does not possible look like?
 
 def canFinish(numCourses: int, prerequisites: List[List[int]]) -> bool:
-    # Create lists of dependencies and visited:
+    # Create lists of dependencies:
     dependencies = []
     for i in range(numCourses):
         dependencies.append([])
-    visited = [False] * numCourses
 
     # Populate dependencies list:
     for i in prerequisites:
         dependencies[i[0]].append(i[1])
-    print("dependencies: ", dependencies)
 
     # Check each course to see if it can be completed:
     for i in range(numCourses):
+        visited = []
         val = finishHelp(dependencies, visited, i)
         if val == False:
             return False
