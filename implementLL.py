@@ -39,9 +39,16 @@ class MyLinkedList(object):
         :type index: int
         :rtype: int
         """
-        for i in range(index):
+        # edge cases:
+        # index beyond list length:
+        # index at last node:
+        for i in range(index + 1):
+            # index beyond list length:
             if self == None:
                 return -1
+            # index at last node:
+            elif i == index:
+                return self.val
             else:
                 self = self.next
         return self.val
@@ -136,6 +143,7 @@ def main() -> None:
     print("after")
     printList(head)
     '''
+    '''
     #testcase 3:
 
     head = MyLinkedList()
@@ -171,9 +179,112 @@ def main() -> None:
     head.addAtHead(6)
     print("head.addAtHead(6) s/b: [6,4,6,1,2,0,0,4]")
     printList(head)
+    '''
+    #testcase 2
+    '''
+    ["MyLinkedList", [],
+    "addAtHead",[7],
+    "addAtHead",[2],
+    "addAtHead",[1],
+    "addAtIndex",[3,0],
+    "deleteAtIndex",[2],
+    "addAtHead",[6],
+    "addAtTail",[4],
+    "get",[4],
+    "addAtHead",[4],
+    "addAtIndex",[5,0],
+    "addAtHead"],[6]
+    [[],[7],[2],[1],[3,0],[2],[6],[4],[4],[4],[5,0],[6]]
+    '''
+    '''
+    head = MyLinkedList()
+    head.addAtHead(7)
+    print("addAtHead(7) s/b: [7]")
+    printList(head)
+    head.addAtHead(2)
+    print("addAtHead(7) s/b: [2,7]")
+    printList(head)
+    head.addAtHead(1)
+    print("head.addAtHead(1) s/b: [1,2,7]")
+    printList(head)
+    head.addAtIndex(3,0)
+    print("head.addAtIndex(3,0) s/b: [1,2,7,0]")
+    printList(head)
+    head.deleteAtIndex(2)
+    print("head.deleteAtIndex(2) s/b: [1,2,0]")
+    head.addAtHead(6)
+    print("head.addAtHead(6) s/b: [6,1,2,0]")
+    printList(head)
+    head.addAtTail(4)
+    print("head.addAtTail(4) s/b: [6,1,2,0,4]")
+    printList(head)
+    print("head.get(4) s/b: 4")
+    print(head.get(4))
+    head.addAtHead(4)
+    print("head.addAtHead(4) s/b: [4,6,1,2,0,4]")
+    printList(head)
+    head.addAtIndex(5,0)
+    print("head.addAtIndex(5,0) s/b: [4,6,1,2,0,0,4]")
+    printList(head)
+    head.addAtHead(6)
+    print("head.addAtHead(6) s/b: [6,4,6,1,2,0,0,4]")
+    printList(head)
+    '''
 
+    # testcase 5:
+    '''
+    ["MyLinkedList","addAtHead","addAtHead","addAtHead","addAtIndex","deleteAtIndex","addAtHead","addAtTail","get","addAtHead","addAtIndex","addAtHead"]
+    [[],[7],[2],[1],[3,0],[2],[6],[4],[4],[4],[5,0],[6]]
+    ["MyLinkedList",[],
+    "addAtHead",[7],
+    "addAtHead",[2],
+    "addAtHead",[1],
+    "addAtIndex",[3,0],
+    "deleteAtIndex",[2],
+    "addAtHead",[6],
+    "addAtTail",[4],
+    "get",[4],
+    "addAtHead",[4],
+    "addAtIndex",[5,0],
+    "addAtHead",[6]]
+    '''
+    head = MyLinkedList()
+    head.addAtHead(7)
+    print("head.addAtHead(7) s/b: [7]")
+    printList(head)
+    head.addAtHead(2)
+    print("head.addAtHead(2) s/b: [2,7]")
+    printList(head)
+    head.addAtHead(1)
+    print("head.addAtHead(1) s/b: [1,2,7]")
+    printList(head)
+    head.addAtIndex(3,0)
+    print("head.addAtIndex(3,0) s/b: [1,2,7,0]")
+    printList(head)
+    head.deleteAtIndex(2)
+    print("head.deleteAtIndex(2) s/b: [1,2,0]")
+    printList(head)
+    head.addAtHead(6)
+    print("head.addAtHead(6) s/b: [6,1,2,0]")
+    printList(head)
+    head.addAtTail(4)
+    print("head.addAtTail(4) s/b: [6,1,2,0,4]")
+    printList(head)
+    print("head.get(4) s/b: 4")
+    print(head.get(4))
+    head.addAtHead(4)
+    print("head.addAtHead(4) s/b: [4,6,1,2,0,4]")
+    printList(head)
+    head.addAtIndex(5,0)
+    print("head.addAtIndex(5,0) s/b: [4,6,1,2,0,0,4]")
+    printList(head)
+    "addAtHead",[6]
+    head.addAtHead(6)
+    print("head.addAtHead(6) s/b: [6,4,6,1,2,0,0,4]")
+    printList(head)
 
     '''
+    # My initial tests:
     head = MyLinkedList(1)
     iterNode = head
     newNode = MyLinkedList(2)
