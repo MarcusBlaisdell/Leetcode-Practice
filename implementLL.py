@@ -30,7 +30,7 @@ Implement the MyLinkedList class:
 
 class MyLinkedList(object):
 
-    def __init__(self, val=0, next=None):
+    def __init__(self, val=None, next=None):
         self.val = val
         self.next = next
 
@@ -40,16 +40,20 @@ class MyLinkedList(object):
         :rtype: int
         """
         for i in range(index):
-            if self.next == None:
+            if self == None:
                 return -1
             else:
                 self = self.next
         return self.val
 
     def addAtHead(self, val: int):
-        newNode = MyLinkedList(self.val, self.next)
-        self.val = val
-        self.next = newNode
+        # if list is empty:
+        if (self.val == None) & (self.next == None):
+            self.val = val
+        else:
+            newNode = MyLinkedList(self.val, self.next)
+            self.val = val
+            self.next = newNode
 
     def addAtTail(self, val: int) -> None:
         newNode = MyLinkedList(val)
@@ -68,14 +72,26 @@ class MyLinkedList(object):
         self.next = newNode
 
     def deleteAtIndex(self, index: int) -> None:
-        for i in range(index - 1):
-            if self == None:
-                break
+        # edge case, list has only 1 element:
+        if (self.next == None) & (self.val != None):
+            self.val = None
+        # edge case, list is empty, do nothing:
+        elif (self.val == None) & (self.next == None):
+            pass
+        else:
+            for i in range(index - 1):
+                if self == None:
+                    break
+                else:
+                    self = self.next
+            # Edge case: index is end of list:
+            if self.next == None:
+                del self
             else:
-                self = self.next
-        delNode = self.next
-        self.next = self.next.next
-        del delNode
+                delNode = self.next
+                self.next = self.next.next
+                del delNode
+
 # end class
 
 def printList(head: MyLinkedList) -> None:
@@ -86,6 +102,78 @@ def printList(head: MyLinkedList) -> None:
     del iterNode
 
 def main() -> None:
+    '''
+    "MyLinkedList",[], []
+    "addAtHead",[1], [1,[]]
+    "addAtTail",[3], [1,[],3]
+    "addAtIndex",[1,2], [1,2,[],3]
+    "get",[1], return 2
+    "deleteAtIndex",[1], [1,[],3]
+    "get",[1] return null
+    '''
+    '''
+    # Test case 1
+    head = MyLinkedList()
+    head.addAtHead(1)
+    head.addAtTail(3)
+    head.addAtIndex(1,2)
+    print(head.get(1))
+    head.deleteAtIndex(1)
+    print(head.get(1))
+    # end test case 1
+    '''
+
+    '''
+    # test case 2, delete at index, index is end of list:
+    head = MyLinkedList(1)
+    #head.addAtTail(2)
+    print("before:")
+    printList(head)
+    head.deleteAtIndex(0)
+    print("after")
+    printList(head)
+    head.deleteAtIndex(0)
+    print("after")
+    printList(head)
+    '''
+    #testcase 3:
+
+    head = MyLinkedList()
+    head.addAtHead(7)
+    print("head.addAtHead(7) s/b: [7]")
+    printList(head)
+    head.addAtHead(2)
+    print("head.addAtHead(2) s/b [2,7]")
+    printList(head)
+    head.addAtHead(1)
+    print("head.addAtHead(1) s/b [1,2,7]")
+    printList(head)
+    head.addAtIndex(3,0)
+    print("head.addAtIndex(3,0) s/b [1,2,7,0]")
+    printList(head)
+    head.deleteAtIndex(2)
+    print("head.deleteAtIndex(2) s/b [1,2,0]")
+    printList(head)
+    head.addAtHead(6)
+    print("head.addAtHead(6) s/b: [6,1,2,0]")
+    printList(head)
+    head.addAtTail(4)
+    print("head.addAtTail(4) s/b: [6,1,2,0,4]")
+    printList(head)
+    print("head.get(4) s/b 4: ")
+    print(head.get(4))
+    head.addAtHead(4)
+    print("head.addAtHead(4)s/b [4,6,1,2,0,4]")
+    printList(head)
+    head.addAtIndex(5,0)
+    print("head.addAtIndex(5,0) s/b [4,6,1,2,0,0,4]")
+    printList(head)
+    head.addAtHead(6)
+    print("head.addAtHead(6) s/b: [6,4,6,1,2,0,0,4]")
+    printList(head)
+
+
+    '''
     head = MyLinkedList(1)
     iterNode = head
     newNode = MyLinkedList(2)
@@ -112,6 +200,7 @@ def main() -> None:
     print("Delete at index:")
     head.deleteAtIndex(2)
     printList(head)
+    '''
 
 if __name__=='__main__':
     main()
