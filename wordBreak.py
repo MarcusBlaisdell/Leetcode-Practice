@@ -16,20 +16,28 @@ Output: true
 from typing import List
 
 def wordBreak(i: str, d: List) -> bool:
-    y = 0
-    for l in d[1]:
-        if l != i[y]:
-            return False
-        y += 1
+    dp = [False] * (len(i) + 1)
+    dp[len(i)] = True
 
-    return True
+    for x in range(len(i) -1, -1, -1):
+        for w in d:
+            if ((x + len(w)) <= len(i)) and i[x:(x + len(w))] == w:
+                dp[x] = dp[x + len(w)]
+            if dp[x]:
+                break
+
+    return dp[0]
 
 def main() -> None:
-    input = "leetcode"
-    wordDict = ["leet", "code"]
+    test =  [
+            ["leetcode", ["leet", "code"]],
+            ["codebase",["base","code"]],
+            ["codebase",["base","cod"]]
+            ]
 
-    answer = wordBreak(input, wordDict)
-    print("Answer: ", answer)
+    for i in test:
+        answer = wordBreak(i[0], i[1])
+        print(i[0], "- Answer: ", answer)
 
 if __name__=='__main__':
     main()
