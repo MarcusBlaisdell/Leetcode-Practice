@@ -34,14 +34,14 @@ nums[4] = 0, 0 matches target, return index
 from typing import List
 
 def search(nums: List, target: int) -> int:
+    if target == nums[0]:
+        return 0
+    if target == nums[len(nums) - 1]:
+        return len(nums) - 1
     l,r = 0, (len(nums) - 1)
     cur = (r - l) // 2
 
     while l < (r - 1):
-        if target == nums[l]:
-            return l
-        if target == nums[r]:
-            return r
         if nums[cur] == target:
             return cur
         if target < nums[cur]:
