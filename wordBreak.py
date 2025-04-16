@@ -30,7 +30,7 @@ def wordBreak(i: str, d: List) -> bool:
 
 def main() -> None:
     test =  [
-            ["leetcode", ["leet", "code"]],
+            ["leetcode",["leet","code"]],
             ["codebase",["base","code"]],
             ["codebase",["base","cod"]]
             ]
