@@ -34,47 +34,27 @@ nums[4] = 0, 0 matches target, return index
 from typing import List
 
 def search(nums: List, target: int) -> int:
-    # check end points:
-    if nums[0] == target:
-        return 0
-    if nums[len(nums) - 1] == target:
-        return len(nums) - 1
-
     l,r = 0, (len(nums) - 1)
     cur = (r - l) // 2
 
     while l < (r - 1):
+        if target == nums[l]:
+            return l
+        if target == nums[r]:
+            return r
         if nums[cur] == target:
             return cur
-        elif (target > nums[l]) & (target < nums[cur]):
-            r = cur
+        if target < nums[cur]:
+            if (target < nums[l]) & (nums[l] < nums[cur]):
+                l = cur
+            else:
+                r = cur
             cur = (((r - l) // 2) + l)
-        elif (target > nums[cur]) & (target < nums[r]):
-            l = cur
-            cur = (((r - l) // 2) + l)
-        # if target less than current position,
-        # and left index less than current position,
-        # move right:
-        elif (target < nums[cur]) & (target < nums[l]) & (nums[l] < nums[cur]):
-            l = cur
-            cur = (((r - l) // 2) + l)
-        # if target less than current position,
-        # and left index greater than current position,
-        # move left
-        elif (target < nums[cur]) & (target < nums[l]) & (nums[l] > nums[cur]):
-            r = cur
-            cur = (((r - l) // 2) + l)
-        # if target greater than current position,
-        # and left index < current index,
-        # move right
-        elif (target > nums[cur]) & (target > nums[l]) & (nums[l] < nums[cur]):
-            l = cur
-            cur = (((r - l) // 2) + l)
-        # if target greater than current position,
-        # and left index > current index,
-        # move left
-        elif (target > nums[cur]) & (target > nums[l]) & (nums[l] > nums[cur]):
-            r = cur
+        else:
+            if (target > nums[r]) & (nums[r] > nums[cur]):
+                r = cur
+            else:
+                l = cur
             cur = (((r - l) // 2) + l)
 
     return -1
