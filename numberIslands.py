@@ -188,6 +188,7 @@ def islandHelp(grid: List, root: List, node: tuple) -> None:
 
 def numIslands(grid: List) -> int:
     count = 0
+    # use set instead of matrix
     root = [[[]] * len(grid)] * len(grid[0])
 
     for r in range(len(grid)):
