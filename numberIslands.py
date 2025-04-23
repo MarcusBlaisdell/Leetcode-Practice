@@ -156,45 +156,42 @@ def numIslands(grid: List) -> int:
     return count
 '''
 
-def islandHelp(grid: List, visit: set) -> None:
+def islandHelp(grid: List, node: tuple) -> None:
     r = len(grid)
     c = len(grid[0])
-    print("r: ", r, ", c: ", c)
     # if current node already has a root,
-    print("[",node[0],"][",node[1],"]")
-    if root[node[0]][node[1]]:
+    if node in visited:
         pass
-    '''
-    else:
-        # set current nodes root to current node
-        root[node[0]][node[1]] = [node[0]][node[1]]
-    # check left, visit if exists and doesn't have a root:
-    if node[1] - 1 > -1:
-    #if grid[node[0]][node[1] - 1]:
-        if (grid[node[0]][node[1] - 1] == "1") and (root[node[0]][node[1] - 1] == []):
-            islandHelp(grid, root, (node[0],node[1] - 1)
-    # check down, visit if exists and doesn't have a root:
-    if (node[0] + 1) < r:
-    #if grid[node[0] + 1][node[1]]:
-        if (grid[node[0] + 1][node[1]] == "1") and (root[node[0] + 1][node[1]] == []):
-            islandHelp(grid, root, (node[0] + 1,node[1]))
-    # check right, visit if exists and doesn't have a root:
-    if node[1] + 1 < c):
-    #if grid[node[0]][node[1] + 1]:
-        if (grid[node[0]][node[1] + 1] == "1") and (root[node[0]][node[1] + 1] == []):
-            islandHelp(grid, root, (node[0],node[1] + 1))
-    '''
+    elif (grid[node[0]][node[1]] == '1'):
+        visited.add(node)
+        # check left, visit if exists and doesn't have a root:
+        if (node[1] - 1) > -1:
+        #if grid[node[0]][node[1] - 1]:
+            if (grid[node[0]][node[1] - 1] == "1") and ((node[0],node[1] - 1) not in visited):
+                islandHelp(grid, (node[0],node[1] - 1))
+        # check down, visit if exists and doesn't have a root:
+        if (node[0] + 1) < (r - 1):
+        #if grid[node[0] + 1][node[1]]:
+            if (grid[node[0] + 1][node[1]] == "1") and ((node[0] + 1,node[1]) not in visited):
+                islandHelp(grid, (node[0] + 1,node[1]))
+        # check right, visit if exists and doesn't have a root:
+        if (node[1] + 1) < (c - 1):
+        #if grid[node[0]][node[1] + 1]:
+            if (grid[node[0]][node[1] + 1] == "1") and ((node[0],node[1] + 1) not in visited):
+                islandHelp(grid, (node[0],node[1] + 1))
 
 
 def numIslands(grid: List) -> int:
     count = 0
     # use set instead of matrix
+    global visited
     visited = set()
 
     for r in range(len(grid)):
         for c in range(len(grid[r])):
-            if root[r][c] == []:
-                islandHelp(grid, root, (r,c))
+            if ((r,c) not in visited) and (grid[r][c] == '1'):
+                count += 1
+                islandHelp(grid, (r,c))
 
     return count
 
