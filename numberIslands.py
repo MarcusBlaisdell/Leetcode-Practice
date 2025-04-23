@@ -156,7 +156,7 @@ def numIslands(grid: List) -> int:
     return count
 '''
 
-def islandHelp(grid: List, root: List, node: tuple) -> None:
+def islandHelp(grid: List, visit: set) -> None:
     r = len(grid)
     c = len(grid[0])
     print("r: ", r, ", c: ", c)
