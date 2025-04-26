@@ -132,6 +132,23 @@ Check left, down, right in recursive call?
 [2][2]:
 [2][3]:
 [2][4]:
+
+        Test 1:
+        11110
+        11010
+        11000
+        00000
+
+        Test 2:
+        11000
+        11000
+        00011
+        00011
+
+        Test 3:
+        111
+        010
+        111
 '''
 from typing import List
 
@@ -159,26 +176,28 @@ def numIslands(grid: List) -> int:
 def islandHelp(grid: List, node: tuple) -> None:
     r = len(grid)
     c = len(grid[0])
+    # current row (cr), current column (cc)
+    cr, cc = node[0], node[1]
     # if current node already has a root,
     if node in visited:
         pass
-    elif (grid[node[0]][node[1]] == '1'):
+    else:# (grid[node[0]][node[1]] == '1'):
         visited.add(node)
         # check left, visit if exists and doesn't have a root:
-        if (node[1] - 1) > -1:
-        #if grid[node[0]][node[1] - 1]:
-            if (grid[node[0]][node[1] - 1] == "1") and ((node[0],node[1] - 1) not in visited):
-                islandHelp(grid, (node[0],node[1] - 1))
+        if (cc - 1) > -1:
+            print("check left: ", cr, ",", cc - 1)
+            if (grid[cr][cc - 1] == "1") and ((cr,cc - 1) not in visited):
+                islandHelp(grid, (cr,cc - 1))
         # check down, visit if exists and doesn't have a root:
-        if (node[0] + 1) < (r - 1):
-        #if grid[node[0] + 1][node[1]]:
-            if (grid[node[0] + 1][node[1]] == "1") and ((node[0] + 1,node[1]) not in visited):
-                islandHelp(grid, (node[0] + 1,node[1]))
+        if (cr + 1) < (r - 1):
+            print("check down", cr, ",", cc)
+            if (grid[cr + 1][cc] == "1") and ((cr + 1,cc) not in visited):
+                islandHelp(grid, (cr + 1,cc))
         # check right, visit if exists and doesn't have a root:
         if (node[1] + 1) < (c - 1):
-        #if grid[node[0]][node[1] + 1]:
-            if (grid[node[0]][node[1] + 1] == "1") and ((node[0],node[1] + 1) not in visited):
-                islandHelp(grid, (node[0],node[1] + 1))
+            print("check right", cr, ",", cc)
+            if (grid[cr][cc + 1] == "1") and ((cr,cc + 1) not in visited):
+                islandHelp(grid, (cr,cc + 1))
 
 
 def numIslands(grid: List) -> int:
@@ -190,6 +209,7 @@ def numIslands(grid: List) -> int:
     for r in range(len(grid)):
         for c in range(len(grid[r])):
             if ((r,c) not in visited) and (grid[r][c] == '1'):
+                print("r,c: ", r, ",", c)
                 count += 1
                 islandHelp(grid, (r,c))
 
