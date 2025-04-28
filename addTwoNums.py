@@ -38,13 +38,17 @@ def addTwoNumbers(l1: ListNode, l2: ListNode) -> ListNode:
         curNode.val = (val1 + val2 + carry) % 10
         # get new carry value:
         carry = (val1 + val2 + carry) // 10
-        # create a new node, set it to current node's next:
-        curNode.next = ListNode()
-        # move to new node:
-        curNode = curNode.next
+
         # increment input list(s):
         l1 = l1.next if l1 else None
         l2 = l2.next if l2 else None
+
+        # only create new node if it's needed:
+        if l1 or l2 or carry:
+            # create a new node, set it to current node's next:
+            curNode.next = ListNode()
+            # move to new node:
+            curNode = curNode.next
 
     # return the root node:
     return rootNode
