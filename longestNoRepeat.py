@@ -23,12 +23,12 @@ def longestSub(s: str) -> int:
         if s[c] in a:
             if len(a) > maxlen:
                 maxlen = len(a)
-                # find the index of the repeated character
-                while s[i] != s[c]:
-                    a.remove(s[i])
-                    i += 1
+            # find the index of the repeated character
+            while s[i] != s[c]:
+                a.remove(s[i])
                 i += 1
-                a.add(s[c])
+            i += 1
+            a.add(s[c])
         else:
             a.add(s[c])
     # if no character was repeated through the end
@@ -44,7 +44,14 @@ def main() -> None:
             ("abcdefbghi", 8),
             ("cdefbghi", 8),
             ("abcdefbgahcid", 9),
-            ("abcdefabcd", 6)]
+            ("abcdefabcd", 6),
+            ("jbpnbwwd",4),
+            ("dvdf", 3)]
+    '''
+
+    sList = [("jbpnbwwd",4),
+            ("dvdf", 3)]
+    '''
 
     for s, a in sList:
         answer = longestSub(s)
