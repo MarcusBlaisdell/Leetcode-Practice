@@ -81,7 +81,9 @@ def findMedianSortedArrays(nums1: List, nums2: List) -> float:
     if ((len(nums1) + len(nums2)) % 2) == 1:
         return c
     else:
-        return (c + p) / 2
+        # Leetcode wasn't doing float division,
+        # had to force it by making numerator a float:
+        return ((c*1.0) + p) / 2
 
     return answer
 
@@ -91,7 +93,8 @@ def main() -> None:
             ([1,2,3,4],[5],3),
             ([1],[2,3,4,5],3),
             ([1,3],[2,4],2.5),
-            ([1,2],[3,4],2.5)]
+            ([1,2],[3,4],2.5),
+            ([0,0],[0,0],0)]
     '''
     test = [([1,3],[2],2)]
     test = [([1,2,3,4],[5],3)]
