@@ -25,6 +25,7 @@ from typing import List
 
 def findMedianSortedArrays(nums1: List, nums2: List) -> float:
     answer = 0.0
+    medNum = (len(nums1) + len(nums2)) // 2
     '''
     two possibilities, len(nums1) + len(nums2) is odd,
     len(nums1) + len(nums2) is even
@@ -36,20 +37,46 @@ def findMedianSortedArrays(nums1: List, nums2: List) -> float:
     '''
     l1, l2 = 0, 0
 
+    # Find starting lowest number:
+    s = min(nums1[0], nums2[0])
+    i = 0
 
-    while (l1 + l2) < ((len(nums1) + len(nums2)) // 2):
-        if nums1[l1] <= nums2[l2]:
-            if l1 + 1 < len(nums1):
+    # find next lowest number until median reached:
+    while i <= medNum:
+        print("i: ", i, ", s: ", s, ", medNum: ", medNum)
+        if (nums1[l1] < nums2[l2]):
+            s = nums1[l1]
+            i += 1
+            if (l1 < len(nums1) - 1):
                 l1 += 1
-        else:
-            if l2 + 1 < len(nums2):
+        if (nums2[l2] < nums1[l1]):
+            s = nums2[l2]
+            i += 1
+            if (l2 < len(nums2) - 1):
                 l2 += 1
-
-    # if total size is odd:
-    if (((len(nums1) + len(nums2)) % 2) == 1):
-        answer = min(nums1[l1], nums2[l2])
+        elif (nums1[l1] == nums2[l2]):
+            s = nums1[l1]
+            l1 += 1
+            l2 += 1
+            i += 2
+        elif (nums1[l1] == nums2[l2]):
+            if (l1 < len(nums1) - 1):
+                l1 += 1
+            if (l2 < len(nums2) - 1):
+                l2 += 1
+    if ((len(nums1) + len(nums2)) % 2) == 1:
+        answer = s
     else:
-        answer = (max(nums1[l1], nums2[l2]) + max(nums1[l1+1], nums2[l2+1])) / 2
+        #find next number:
+        print("nums1[l1]: ", nums1[l1], ", nums2[l2]: ", nums2[l2])
+        if (nums1[l1] < nums2[l2]):
+            t = nums1[l1]
+        if (nums2[l2] < nums1[l1]):
+            t = nums2[l2]
+        if (nums1[l1] == nums2[l2]):
+            t = nums1[l1]
+        print("s: ", s, ", t: ", t)
+        answer = (s + t) / 2
 
     return answer
 
@@ -59,6 +86,10 @@ def main() -> None:
             ([1,2,3,4],[5],3),
             ([1],[2,3,4,5],3),
             ([1,3],[2,4],2.5)]
+    '''
+
+    input = [([1,3],[2],2)]
+    '''
 
     for i in input:
         a = findMedianSortedArrays(i[0], i[1])
