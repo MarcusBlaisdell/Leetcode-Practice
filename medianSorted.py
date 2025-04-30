@@ -37,61 +37,67 @@ def findMedianSortedArrays(nums1: List, nums2: List) -> float:
     '''
     l1, l2 = 0, 0
 
-    # Find starting lowest number:
-    s = min(nums1[0], nums2[0])
-    i = 0
+    # Find starting lowest number, set to current number, c:
+    if (nums1[l1] < nums2[l2]) or (nums1[l1] == nums2[l2]):
+        c = nums1[l1]
+        if l1 < (len(nums1) - 1):
+            l1 += 1
+    elif (nums2[l2] < nums1[l1]):
+        c = nums2[l2]
+        if l2 < (len(nums2) - 1):
+            l2 += 1
+    # Previous number will be last c before update, initialize to 0:
+    p = 0
+    # index starts at 1 since we already found array[0] value:
+    i = 1
 
     # find next lowest number until median reached:
     while i <= medNum:
-        print("i: ", i, ", s: ", s, ", medNum: ", medNum)
-        if (nums1[l1] < nums2[l2]):
-            s = nums1[l1]
-            i += 1
-            if (l1 < len(nums1) - 1):
+        if (nums1[l1] > c) and (nums2[l2] > c):
+            p = c
+            if (nums1[l1] < nums2[l2]):
+                c = nums1[l1]
+                if l1 < (len(nums1) - 1) and (i < medNum):
+                    l1 += 1
+                i += 1
+            elif (nums2[l2] < nums1[l1]):
+                c = nums2[l2]
+                if l2 < (len(nums2) - 1) and (i < medNum):
+                    l2 += 1
+                i += 1
+        elif (nums1[l1] > c) and (nums2[l2] <= c):
+            p = c
+            c = nums1[l1]
+            if l1 < (len(nums1) - 1) and (i < medNum):
                 l1 += 1
-        if (nums2[l2] < nums1[l1]):
-            s = nums2[l2]
             i += 1
-            if (l2 < len(nums2) - 1):
+        elif (nums2[l2] > c) and (nums1[l1] <= c):
+            p = c
+            c = nums2[l2]
+            if l2 < (len(nums2) - 1) and (i < medNum):
                 l2 += 1
-        elif (nums1[l1] == nums2[l2]):
-            s = nums1[l1]
-            l1 += 1
-            l2 += 1
-            i += 2
-        elif (nums1[l1] == nums2[l2]):
-            if (l1 < len(nums1) - 1):
-                l1 += 1
-            if (l2 < len(nums2) - 1):
-                l2 += 1
+            i += 1
+
     if ((len(nums1) + len(nums2)) % 2) == 1:
-        answer = s
+        return c
     else:
-        #find next number:
-        print("nums1[l1]: ", nums1[l1], ", nums2[l2]: ", nums2[l2])
-        if (nums1[l1] < nums2[l2]):
-            t = nums1[l1]
-        if (nums2[l2] < nums1[l1]):
-            t = nums2[l2]
-        if (nums1[l1] == nums2[l2]):
-            t = nums1[l1]
-        print("s: ", s, ", t: ", t)
-        answer = (s + t) / 2
+        return (c + p) / 2
 
     return answer
 
 def main() -> None:
-    input = [([1,3],[2],2),
+    test = [([1,3],[2],2),
             ([1,2],[3],2),
             ([1,2,3,4],[5],3),
             ([1],[2,3,4,5],3),
-            ([1,3],[2,4],2.5)]
+            ([1,3],[2,4],2.5),
+            ([1,2],[3,4],2.5)]
+    '''
+    test = [([1,3],[2],2)]
+    test = [([1,2,3,4],[5],3)]
     '''
 
-    input = [([1,3],[2],2)]
-    '''
-
-    for i in input:
+    for i in test:
         a = findMedianSortedArrays(i[0], i[1])
         print("s/b: ", i[2], " - is: ", a)
 
