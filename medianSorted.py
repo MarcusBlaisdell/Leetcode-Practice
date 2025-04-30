@@ -53,7 +53,15 @@ def findMedianSortedArrays(nums1: List, nums2: List) -> float:
 
     # find next lowest number until median reached:
     while i <= medNum:
-        if (nums1[l1] > c) and (nums2[l2] > c):
+        if (l1 > 0) and (nums1[l1] == nums1[l1-1]):
+            if l1 < (len(nums1) - 1) and (i < medNum):
+                l1 += 1
+            i += 1
+        elif (l2 > 0) and (nums2[l2] == nums2[l2-1]):
+            if l2 < (len(nums2) - 1) and (i < medNum):
+                l2 += 1
+            i += 1
+        elif (nums1[l1] > c) and (nums2[l2] > c):
             p = c
             if (nums1[l1] < nums2[l2]):
                 c = nums1[l1]
@@ -83,7 +91,7 @@ def findMedianSortedArrays(nums1: List, nums2: List) -> float:
     else:
         # Leetcode wasn't doing float division,
         # had to force it by making numerator a float:
-        return ((c*1.0) + p) / 2
+        return ((c + p)*1.0) / 2
 
     return answer
 
@@ -94,6 +102,7 @@ def main() -> None:
             ([1],[2,3,4,5],3),
             ([1,3],[2,4],2.5),
             ([1,2],[3,4],2.5),
+            ([1,1],[1,1],0.5),
             ([0,0],[0,0],0)]
     '''
     test = [([1,3],[2],2)]
