@@ -22,6 +22,7 @@ Explanation: merged array = [1,2,3,4] and median is (2 + 3) / 2 = 2.5.
 
 '''
 from typing import List
+import time
 
 def findMedianSortedArrays(nums1: List, nums2: List) -> float:
     answer = 0.0
@@ -38,7 +39,17 @@ def findMedianSortedArrays(nums1: List, nums2: List) -> float:
     l1, l2 = 0, 0
 
     # Find starting lowest number, set to current number, c:
-    if (nums1[l1] < nums2[l2]) or (nums1[l1] == nums2[l2]):
+    if (len(nums1) == 0):
+        if (len(nums2) > 0):
+            c = nums2[0]
+        else:
+            return 0
+    elif (len(nums2) == 0):
+        if (len(nums1) > 0):
+            c = nums1[0]
+        else:
+            return 0
+    elif (nums1[l1] < nums2[l2]) or (nums1[l1] == nums2[l2]):
         c = nums1[l1]
         if l1 < (len(nums1) - 1):
             l1 += 1
@@ -53,17 +64,23 @@ def findMedianSortedArrays(nums1: List, nums2: List) -> float:
 
     # find next lowest number until median reached:
     while i <= medNum:
+        print("c: ", c)
+        #time.sleep(1)
         if (l1 > 0) and (nums1[l1] == nums1[l1-1]):
+            p = c
+            c = nums1[l1]
             if l1 < (len(nums1) - 1) and (i < medNum):
                 l1 += 1
             i += 1
         elif (l2 > 0) and (nums2[l2] == nums2[l2-1]):
+            p = c
+            c = nums2[l2]
             if l2 < (len(nums2) - 1) and (i < medNum):
                 l2 += 1
             i += 1
         elif (nums1[l1] > c) and (nums2[l2] > c):
             p = c
-            if (nums1[l1] < nums2[l2]):
+            if (nums1[l1] <= nums2[l2]):
                 c = nums1[l1]
                 if l1 < (len(nums1) - 1) and (i < medNum):
                     l1 += 1
@@ -91,11 +108,14 @@ def findMedianSortedArrays(nums1: List, nums2: List) -> float:
     else:
         # Leetcode wasn't doing float division,
         # had to force it by making numerator a float:
+        print("c: ", c, ", p: ", p)
         return ((c + p)*1.0) / 2
 
     return answer
 
 def main() -> None:
+    test = [([2,2,4,4],[2,2,2,4,4],2)]
+    '''
     test = [([1,3],[2],2),
             ([1,2],[3],2),
             ([1,2,3,4],[5],3),
@@ -103,10 +123,13 @@ def main() -> None:
             ([1,3],[2,4],2.5),
             ([1,2],[3,4],2.5),
             ([1,1],[1,1],0.5),
-            ([0,0],[0,0],0)]
-    '''
+            ([0,0],[0,0],0),
+            ([],[1],1),
+            ([0,0,0,0,0],[-1,0,0,0,0,0,1],0),
+            ([2,2,4,4],[2,2,2,4,4],2)]
+    
     test = [([1,3],[2],2)]
-    test = [([1,2,3,4],[5],3)]
+    test = [([2,2,4,4],[2,2,2,4,4],2)]
     '''
 
     for i in test:
