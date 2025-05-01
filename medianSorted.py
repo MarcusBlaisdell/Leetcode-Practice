@@ -27,12 +27,19 @@ import time
 def findMedianSortedArrays(nums1: List, nums2: List) -> float:
     answer = 0.0
     medNum = (len(nums1) + len(nums2)) // 2
-    if len(nums1) <= len(nums2):
+    if len(nums1) < len(nums2):
         a1 = nums1
         a2 = nums2
-    else:
+    elif len(nums2) < len(nums1):
         a1 = nums2
         a2 = nums1
+    elif len(nums1) == len(nums2):
+        if (nums1[0] > nums2[len(nums2)-1]):
+            a1 = nums2
+            a2 = nums1
+        else:
+            a1 = nums1
+            a2 = nums2
     '''
     two possibilities, len(a1) + len(a2) is odd,
     len(a1) + len(a2) is even
@@ -101,7 +108,7 @@ def findMedianSortedArrays(nums1: List, nums2: List) -> float:
     else:
         # The below assumes both a1 and a2 contain elements:
         while i <= medNum:
-            print("c: ", c, ", l1: ", l1, ", l2: ", l2, ", i: ", i)
+            #print("c: ", c, ", l1: ", l1, ", l2: ", l2, ", i: ", i)
             #time.sleep(1)
             # handle duplicates:
             if (l1 > 0) and (a1[l1] == a1[l1-1]):
@@ -117,6 +124,8 @@ def findMedianSortedArrays(nums1: List, nums2: List) -> float:
             #elif (l2 > 0) and ((a2[l2] == a2[l2-1]) or (a2[l2] == c)):
             # test2:
             #elif ((l2 > 0) and (a2[l2] == a2[l2-1])) or (l2 > 0 and (a2[l2] == c)):
+            # test3:
+            #elif (a2[l2] == c):
                 p = c
                 c = a2[l2]
                 if l2 < (len(a2) - 1) and (i < medNum):
@@ -158,9 +167,9 @@ def findMedianSortedArrays(nums1: List, nums2: List) -> float:
     return answer
 
 def main() -> None:
-    test = [([3,4],[1,2],2.5)]
+    #test = [([3,4],[1,2],2.5)]
     #test = [([2,2,4,4],[2,2,2,4,4],2)]
-    '''
+
     test = [([1,3],[2],2),
             ([1,2],[3],2),
             ([1,2,3,4],[5],3),
@@ -176,7 +185,7 @@ def main() -> None:
             ([100001],[100000],100000.5),
             ([2,3],[1],2),
             ([3,4],[1,2],2.5)]
-
+    '''
     test = [([1,3],[2],2)]
     test = [([2,2,4,4],[2,2,2,4,4],2)]
     '''
