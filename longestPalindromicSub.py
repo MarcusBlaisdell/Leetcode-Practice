@@ -59,6 +59,7 @@ def longestPalindrome(s: str) -> str:
                         b += 1
                         l -= 1
                     if l > b:
+                        l = t - 1
                         if s[b] == s[l]:
                             l -= 1
                         else:
@@ -78,7 +79,8 @@ def main() -> None:
             ("bb", "bb"),
             ("ccc","ccc"),
             ("abb", "bb"),
-            ("aacabdkacaa", "aca")]
+            ("aacabdkacaa", "aca"),
+            ("xaabacxcabaaxcabaax","xaabacxcabaax")]
 
 
     for i in test:
