@@ -29,6 +29,7 @@ def longestPalindrome(s: str) -> str:
         """
         if len(s) == 1:
             return s
+
         r = ""
 
         for c in range(len(s)):
@@ -44,34 +45,41 @@ def longestPalindrome(s: str) -> str:
                 if len(r) <= 1:
                     r = s[b]
             else:
-                while (s[b] == s[l]) and (((t+1) - f) > len(r)):
-                    print("b: ", b, ", l: ", l)
-                    if (b == l) or (l < b):
-                        if ((t+1) - f) >= len(r):
-                            print(s[f:t+1])
-                            r = s[f:t+1]
+                while l > b:
+                    #print("l: ", l, ", b: ", b)
+                    while (s[b] == s[l]) and (((t+1) - f) > len(r)):
+                        #print("b: ", b, ", l: ", l)
+                        if (b == l) or (l < b):
+                            if ((t+1) - f) >= len(r):
+                                #print(s[f:t+1])
+                                r = s[f:t+1]
+                                break
+                        if l == 0:
                             break
-                    else:
-                        b = f
-                        while(s[b] != s[l]):
+                        b += 1
+                        l -= 1
+                    if l > b:
+                        if s[b] == s[l]:
                             l -= 1
+                        else:
+                            b = f
+                            while(s[b] != s[l]):
+                                l -= 1
                         t = l
-                    if l == 0:
-                        break
-                    b += 1
-                    l -= 1
-
         return r
 
 def main() -> None:
+    #test = [("aacabdkacaa", "aca")]
+
     test = [("babad","bab or aba"),
             ("cbbd","bb"),
             ("a", "a"),
             ("ac", "c"),
-            ("bb", "b"),
+            ("bb", "bb"),
             ("ccc","ccc"),
             ("abb", "bb"),
             ("aacabdkacaa", "aca")]
+
 
     for i in test:
         a = longestPalindrome(i[0])
