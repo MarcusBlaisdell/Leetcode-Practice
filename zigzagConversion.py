@@ -66,33 +66,48 @@ def convert(s, numRows):
         '''
         All top and bottom rows will have single repeating pattern
         all mid rows will have two repeating patterns
-        top/bottom row, every (numRows + 1)th
+        top/bottom row, every (numRows + 1)th, row % (numRows - 1) == 0
         mid rows, every () and (numRows + 1)th
         '''
         # Create list to store indexes in order:
         # every case will begin with s[0]
-        indexes = [0]
+        indexes = []
         r = ""
 
         for i in range(numRows):
             # top row, every (numRows + 1)th:
-            p = 0
-            if (numRows + 1) < len(s):
-                p += (numRows + 1)
-            while p < (len(s)):
-                indexes.append(p)
-                p += (numRows + 1)
+            p = i
 
+            while p < (len(s)):
+                # Only do this for middle rows:
+                if ((i % (numRows - 1)) != 0) and (p >= (numRows)):
+                    newNum = (p + (numRows + (numRows - 2)) - (i*2))
+                    if newNum < len(s):
+                        indexes.append(newNum)
+                indexes.append(p)
+                p += (numRows + (numRows - 2))
+
+        if len(indexes) < len(s):
+            indexes.append(len(s) - 1)
+
+        #print(indexes)
         for i in indexes:
             r = r + s[i]
         return r
 
 def main() -> None:
-    test = [("PAYPALISHIRING",3,"PAHNAPLSIIGYIR")]
+    test = [("PAYPALISHIRING",3,"PAHNAPLSIIGYIR"),
+            ("PAYPALISHIRING",4,"PINALSIGYAHRPI")]
 
     for i in test:
         a = convert(i[0],i[1])
-        print("s/b: ", i[2], ", is: ", a)
+        print(" s/b: ", i[2])
+        print(", is: ", a)
+        print("")
+        for x in range(len(i[0])):
+            if i[2][x] != a[x]:
+                print("mismatch, x: ", x, ", i[2][x]: ", i[2][x], ", a[x]: ", a[x])
+                break
 
 if __name__=='__main__':
     main()
