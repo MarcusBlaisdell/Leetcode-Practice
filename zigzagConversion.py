@@ -63,6 +63,9 @@ def convert(s, numRows):
         :type numRows: int
         :rtype: str
         """
+        # if numRows == 1, return s:
+        if numRows == 1:
+            return s
         '''
         All top and bottom rows will have single repeating pattern
         all mid rows will have two repeating patterns
@@ -79,18 +82,17 @@ def convert(s, numRows):
             p = i
 
             while p < (len(s)):
+                indexes.append(p)
                 # Only do this for middle rows:
-                if ((i % (numRows - 1)) != 0) and (p >= (numRows)):
+                if ((i % (numRows - 1)) != 0):
                     newNum = (p + (numRows + (numRows - 2)) - (i*2))
                     if newNum < len(s):
                         indexes.append(newNum)
-                indexes.append(p)
                 p += (numRows + (numRows - 2))
 
         if len(indexes) < len(s):
             indexes.append(len(s) - 1)
 
-        #print(indexes)
         for i in indexes:
             r = r + s[i]
         return r
