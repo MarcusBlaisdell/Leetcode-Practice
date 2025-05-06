@@ -65,43 +65,22 @@ def convert(s, numRows):
         :type numRows: int
         :rtype: str
         """
-        # if numRows == 1, return s:
         if numRows == 1:
             return s
-        '''
-        All top and bottom rows will have single repeating pattern
-        all mid rows will have two repeating patterns
-        top/bottom row, every (numRows + 1)th, row % (numRows - 1) == 0
-        mid rows, every () and (numRows + 1)th
-        '''
-        # Create list to store indexes in order:
-        # every case will begin with s[0]
-        indexes = []
-        r = ""
+
+        a = ""
 
         for i in range(numRows):
-            # top row, every (numRows + 1)th:
-            p = i
-
-            while p < (len(s)):
-                indexes.append(p)
-                # Only do this for middle rows:
-                if ((i % (numRows - 1)) != 0):
-                    newNum = (p + (numRows + (numRows - 2)) - (i*2))
-                    if newNum < len(s):
-                        indexes.append(newNum)
-                p += (numRows + (numRows - 2))
-
-        if len(indexes) < len(s):
-            indexes.append(len(s) - 1)
-
-        for i in indexes:
-            r = r + s[i]
-        return r
+            for j in range(i, len(s), 2 * (numRows - 1)):
+                a += s[j]
+                if (i > 0 and i < numRows - 1 and j + 2 * (numRows - 1) - 2 * i < len(s)):
+                    a += s[j + 2 * (numRows - 1) - 2 * i]
+        return a
 
 def main() -> None:
     test = [("PAYPALISHIRING",3,"PAHNAPLSIIGYIR"),
             ("PAYPALISHIRING",4,"PINALSIGYAHRPI")]
+
     t = time.time()
 
     for i in test:
@@ -115,6 +94,7 @@ def main() -> None:
                 break
 
     print("Total time: ", time.time() - t)
+
 
 if __name__=='__main__':
     main()
