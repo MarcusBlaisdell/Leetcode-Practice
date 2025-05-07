@@ -30,7 +30,8 @@ Constraints:
 
     -2^31 <= x <= 2^31 - 1
 
-Beats: 89.36%
+Runtime beats: 89.36%
+Memory beats: 76.81%
 '''
 def reverse(x):
         """
@@ -39,7 +40,6 @@ def reverse(x):
         """
         r = 0
         n = 1
-        c = 0
 
         if x < 0:
             n = -1
@@ -48,10 +48,9 @@ def reverse(x):
         while x > 0:
             r *= 10
             r += (x % 10)
-            if (r > 2147483648):
+            if (r > (2**31)):
                 return 0
             x = x // 10
-            c += 1
 
         return r * n
 
