@@ -140,7 +140,8 @@ def intToRoman(num: int) -> str:
 def main() -> None:
     test = [(3749, "MMMDCCXLIX"),
             (58,"LVIII"),
-            (1994, "MCMXCIV")]
+            (1994, "MCMXCIV"),
+            (3999, "MMMCMXCIX")]
 
     for i in test:
         a = intToRoman(i[0])
