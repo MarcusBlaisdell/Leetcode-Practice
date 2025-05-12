@@ -16,11 +16,11 @@ Roman numerals are formed by appending the conversions of decimal place values
 from highest to lowest. Converting a decimal place value into a Roman numeral
 has the following rules:
 
-    If the value does not start with 4 or 9, select the symbol of the maximal
+    If the value does not start with 4 or 9, select the symbol of the manumimal
     value that can be subtracted from the input, append that symbol to the
     result, subtract its value, and convert the remainder to a Roman numeral.
     If the value starts with 4 or 9 use the subtractive form representing one
-    symbol subtracted from the following symbol, for example, 4 is 1 (I) less
+    symbol subtracted from the following symbol, for enumample, 4 is 1 (I) less
     than 5 (V): IV and 9 is 1 (I) less than 10 (X): IX. Only the following
     subtractive forms are used: 4 (IV), 9 (IX), 40 (XL), 90 (XC), 400 (CD) and
     900 (CM).
@@ -33,13 +33,13 @@ Given an integer, convert it to a Roman numeral.
 
 
 
-Example 1:
+Enumample 1:
 
 Input: num = 3749
 
 Output: "MMMDCCXLIX"
 
-Explanation:
+Enumplanation:
 
 3000 = MMM as 1000 (M) + 1000 (M) + 1000 (M)
  700 = DCC as 500 (D) + 100 (C) + 100 (C)
@@ -48,24 +48,24 @@ Explanation:
 Note: 49 is not 1 (I) less of 50 (L) because the conversion is based on
 decimal places
 
-Example 2:
+Enumample 2:
 
 Input: num = 58
 
 Output: "LVIII"
 
-Explanation:
+Enumplanation:
 
 50 = L
  8 = VIII
 
-Example 3:
+Enumample 3:
 
 Input: num = 1994
 
 Output: "MCMXCIV"
 
-Explanation:
+Enumplanation:
 
 1000 = M
  900 = CM
@@ -85,63 +85,110 @@ L	50
 C	100
 D	500
 M	1000
+
+Beats Runtime: 62.09%
+Beats memory: 13.34%
 '''
 def intToRoman(num: int) -> str:
     """
     :type num: int
     :rtype: str
     """
-    r = ""
-    if num >= 1000:
-        anum = num // 1000
-        for i in range(anum):
-            r = r + 'M'
-            num = num % 1000
+    r = ''
+    '''
+    handle 1000's:
+    constraint, num will never enumceed 3,999,
+    so just add as many 'M's as needed:
+    '''
+    if num > 1000:
+    	y = num // 1000
+    	for i in range(y):
+        	r += 'M'
+    	num = num % 1000
 
+    '''
+    Handle 100's:
+    for each value over 100 up to 300:
+    	add 'C',
+    if 400:
+    	add 'CD'
+    if > 500 and < 900:
+    	add 'D' + 'C'
+    if => 900:
+    	add 'CM'
+    '''
+    if num >= 900:
+    	r += 'CM'
+    	num = num % 100
     if num >= 500:
-        r = r + 'D'
-        num = num - 500
-
+    	r += 'D'
+    	num -= 500
+    	y = num // 100
+    	for i in range(y):
+        	r += 'C'
+    	num = num % 100
     if num >= 400:
-            r += 'ID'
-    if num >= 100:
-        anum = num // 100
-        for i in range(anum):
-            r = r + 'C'
-            num = num % 100
+    	r += 'CD'
+    if num < 400:
+    	y = num // 100
+    	for i in range(y):
+        	r += 'C'
+    num = num % 100
 
+    '''
+    Handle 10's:
+
+    '''
+    if num >= 90:
+    	r += 'XC'
+    	num = num % 10
     if num >= 50:
-        r = r + 'L'
-        num = num % 50
-
+    	r += 'L'
+    	y = (num - 50) // 10
+    	for i in range(y):
+        	r += 'X'
+    	num = num % 10
     if num >= 40:
-        r = r + "IL"
-    if num >= 10:
-        anum = num // 10
-        for i in range(anum):
-            r = r + "X"
-        num = anum % 10
+    	r += 'XL'
+    	num = num % 10
+    if num > 10:
+    	y = num // 10
+    	for i in range(y):
+        	r += 'X'
+    	num = num % 10
 
+    '''
+    Handle 1's:
+    '''
+    if num == 10:
+        r += 'X'
+        return r
     if num == 9:
-        r = r + "IX"
+    	r += 'IX'
+    	return r
     if num >= 5:
-        r = r + "V"
-        anum = num - 5
-        for i in range(anum):
-            r = r + "I"
+    	r += 'V'
+    	y = num - 5
+    	for i in range(y):
+        	r += 'I'
+    	return r
     if num == 4:
-        r = r + "IV"
-    if num > 0:
-        for i in range(num):
-            r = r + "I"
+    	r += 'IV'
+    	return r
+    for i in range(num):
+    	r += 'I'
 
     return r
+
 
 def main() -> None:
     test = [(3749, "MMMDCCXLIX"),
             (58,"LVIII"),
             (1994, "MCMXCIV"),
-            (3999, "MMMCMXCIX")]
+            (3999, "MMMCMXCIX"),
+            (10,"X"),
+            (100, "C"),
+            (1000, "M")]
 
     for i in test:
         a = intToRoman(i[0])
