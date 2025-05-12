@@ -68,6 +68,8 @@ C             100
 D             500
 M             1000
 
+Runtime beats 49.71%
+Memory beats 13.18%
 '''
 def romanToInt(s):
         """
@@ -82,52 +84,84 @@ def romanToInt(s):
             while s[i] == 'M':
                 r += 1000
                 i += 1
+                if i >= len(s):
+                    return r
 
-        if s[i] == 'C' and s[i+1] == 'M':
-            r += 900
-            i += 2
+        if s[i] == 'C' and i <= len(s) - 2:
+            if s[i+1] == 'M':
+                r += 900
+                i += 2
+                if i >= len(s):
+                    return r
+        if s[i] == 'C' and i <= len(s) - 2:
+            if s[i+1] == 'D':
+                r += 400
+                i += 2
+                if i >= len(s):
+                    return r
 
         # 100's
         if s[i] == 'D':
             r += 500
             i += 1
+            if i >= len(s):
+                return r
         if s[i] == 'C':
             while s[i] == 'C':
                 r += 100
                 i += 1
+                if i >= len(s):
+                    return r
 
         # 10's
-        if s[i] == 'X' and s[i+1] == 'C':
-            r += 90
-            i += 2
-        if s[i] == 'X' and s[i+1] == 'L':
-            r += 40
-            i += 2
+        if s[i] == 'X' and i <= len(s) - 2:
+            if s[i+1] == 'C':
+                r += 90
+                i += 2
+                if i >= len(s):
+                    return r
+        if s[i] == 'X' and i <= len(s) - 2:
+            if  s[i+1] == 'L':
+                r += 40
+                i += 2
+                if i >= len(s):
+                    return r
         if s[i] == 'L':
             r += 50
             i += 1
+            if i >= len(s):
+                return r
         if s[i] == 'X':
             while s[i] == 'X':
                 r += 10
                 i += 1
+                if i >= len(s):
+                    return r
 
-        while i < len(s):
-            # 1's
-            if s[i] == 'V':
-                r += 5
+        # 1's
+        if s[i] == 'V':
+            r += 5
+            i += 1
+            if i >= len(s):
+                return r
+        if s[i] == 'I':
+            if i <= len(s) - 2:
+                if s[i+1] == 'X':
+                    r += 9
+                    i += 2
+                    if i >= len(s):
+                        return r
+                if s[i+1] == 'V':
+                    r += 4
+                    i += 2
+                    if i >= len(s):
+                        return r
+
+            while s[i] == 'I' and i < len(s):
+                r += 1
                 i += 1
-            if s[i] == 'I':
-                if i <= len(s) - 2:
-                    if s[i+1] == 'X':
-                        r += 9
-                        i += 2
-                    if s[i+1] == 'V':
-                        r += 4
-                        i += 2
-                if i < len(s):
-                    while s[i] == 'I' and i < len(s):
-                        r += 1
-                        i += 1
+                if i >= len(s):
+                    return r
 
         return r
 
@@ -136,7 +170,16 @@ def main() -> None:
             ("LVIII", 58),
             ("MCMXCIV", 1994),
             ("MMMDCCXLIX", 3749),
-            ("MMMCCXLIX", 3249)]
+            ("MMMDCCXL", 3740),
+            ("MMMCCXLIX", 3249),
+            ("DCXXI",621),
+            ("MCDLXXVI",1476),
+            ("MMCCCX",2310),
+            ("MDCXCV",1695),
+            ("CXC",190),
+            ("MMMXL",3040),
+            ("MMMCML",3950),
+            ("MCM",1900)]
 
     for i in test:
         a = romanToInt(i[0])
