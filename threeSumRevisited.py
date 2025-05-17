@@ -46,15 +46,18 @@ Constraints:
 '''
 from typing import List
 
-def twoSum(nums: List, found: List) -> None:
-    visited = set()
-    r = set()
+def twoSum(nums: List, target: int) -> List:
+    r = []
+
     for i in nums:
-        if (0 - i) in visited:
-            if (i, 0 - i) not in r:
-                r.add((i, 0 - i))
-        else:
-            visited.add(i)
+        nums2 = nums
+        nums2.remove(i)
+        if (t - i) in nums2:
+            add = [i, t - i]
+            add.sort()
+            if (add) not in r:
+                r.append(add)
+
     return r
 
 def threeSum(nums: List) -> List:
@@ -86,9 +89,11 @@ def threeSum(nums: List) -> List:
             # more than 3 integers:
             for i in nums:
                 # find all sets of two that sum to 0 with i:
+                nums2 = nums
+                nums2.remove(i)
+                twoSum(nums2, found, i)
 
-
-
+        r.append(found)
         return r
 
 
@@ -99,13 +104,8 @@ def main() -> None:
             ([1,2,-3],[[1,2,-3]]),
             ([-1, 1, 0, -2, 2, -3, 3],[[-1,1,0],[-2,2,0],[-3,3,0]])]
 
-    '''
     for i in test:
         a = threeSum(i[0])
-        print("s/b: ", i[1], ", is: ", a)
-    '''
-    for i in test:
-        a = twoSum(i[0])
         print("s/b: ", i[1], ", is: ", a)
 
 if __name__=='__main__':
