@@ -46,11 +46,12 @@ Constraints:
 '''
 from typing import List
 
-def twoSum(nums: List, target: int) -> List:
+def twoSum(nums: List, t: int) -> List:
     r = []
+    t = t * -1
 
     for i in nums:
-        nums2 = nums
+        nums2 = nums[:]
         nums2.remove(i)
         if (t - i) in nums2:
             add = [i, t - i]
@@ -89,15 +90,21 @@ def threeSum(nums: List) -> List:
             # more than 3 integers:
             for i in nums:
                 # find all sets of two that sum to 0 with i:
-                nums2 = nums
+                nums2 = nums[:]
                 nums2.remove(i)
-                twoSum(nums2, found, i)
+                n = twoSum(nums2, i)
+                for j in n:
+                    k = j[:]
+                    k.append(i)
+                    k.sort()
+                    if k not in r:
+                        r.append(k)
 
-        r.append(found)
         return r
 
 
 def main() -> None:
+    # test threeSum:
     test = [([-1,0,1,2,-1,-4], [[-1,-1,2],[-1,0,1]]),
             ([0,1,1], []),
             ([0,0,0], [[0,0,0]]),
@@ -107,6 +114,18 @@ def main() -> None:
     for i in test:
         a = threeSum(i[0])
         print("s/b: ", i[1], ", is: ", a)
+    '''
+    # test twoSum:
+    test = [([-1,0,1,2,-1,-4], [[-1,1]]),
+            ([0,1,1], []),
+            ([0,0,0], [[0,0]]),
+            ([1,2,-3],[[]]),
+            ([-1, 1, 0, -2, 2, -3, 3],[[-1,1],[-2,2],[-3,3]])]
+
+    for i in test:
+        a = twoSum(i[0], 0)
+        print("s/b: ", i[1], ", is: ", a)
+    '''
 
 if __name__=='__main__':
     main()
