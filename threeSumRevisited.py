@@ -42,53 +42,54 @@ Constraints:
     3 <= nums.length <= 3000
     -10^5 <= nums[i] <= 10^5
 
-
+Solution exceeds time limit on Leetcode
 '''
 from typing import List
 
-def twoSum(nums: List, t: int) -> List:
-    r = []
-    t = t * -1
-
-    for i in nums:
-        nums2 = nums[:]
-        nums2.remove(i)
-        if (t - i) in nums2:
-            add = [i, t - i]
-            add.sort()
-            if (add) not in r:
-                r.append(add)
-
-    return r
-
 def threeSum(nums: List) -> List:
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
-        '''
-        I can use two sum solution in combination with each
-        integer, for each integer i in nums, run twoSum with (-1 * i)
-        as the target
-        Seems like a poor time complexity, but...
-        '''
+    visited = set()
+    def twoSum(nums: List, t: int) -> List:
         r = []
-        found = set()
-        # if not enough integers, return empty list:
-        if len(nums) < 3:
-            return r
+        t = t * -1
 
-        # if only three integers, check if valid and return nums,
-        # and empty list if not valid:
-        if len(nums) == 3:
-            if (nums[0] + nums[1] + nums[2]) != 0:
-                return []
-            else:
-                r.append(nums)
-                return r
+        for i in nums:
+            nums2 = nums[:]
+            nums2.remove(i)
+            if (t - i) in nums2:
+                add = [i, t - i]
+                add.sort()
+                if (add) not in r:
+                    r.append(add)
+
+        return r
+    """
+    :type nums: List[int]
+    :rtype: List[List[int]]
+    """
+    '''
+    I can use two sum solution in combination with each
+    integer, for each integer i in nums, run twoSum with (-1 * i)
+    as the target
+    Seems like a poor time complexity, but...
+    '''
+    r = []
+    found = set()
+    # if not enough integers, return empty list:
+    if len(nums) < 3:
+        return r
+
+    # if only three integers, check if valid and return nums,
+    # and empty list if not valid:
+    if len(nums) == 3:
+        if (nums[0] + nums[1] + nums[2]) != 0:
+            return []
         else:
-            # more than 3 integers:
-            for i in nums:
+            r.append(nums)
+            return r
+    else:
+        # more than 3 integers:
+        for i in nums:
+            if i not in visited:
                 # find all sets of two that sum to 0 with i:
                 nums2 = nums[:]
                 nums2.remove(i)
@@ -99,8 +100,8 @@ def threeSum(nums: List) -> List:
                     k.sort()
                     if k not in r:
                         r.append(k)
-
-        return r
+            visited.add(i)
+    return r
 
 
 def main() -> None:

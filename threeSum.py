@@ -5,6 +5,8 @@ Three Sum
 May 31, 2025
 -1, 0, 1, 2, -1, -4
 -4, -1, -1, 0, 1, 2
+
+Solution exceeds time limit on Leetcode
 '''
 
 def twoSum(theArray, n, i1):
