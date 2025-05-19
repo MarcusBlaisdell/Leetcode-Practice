@@ -59,36 +59,34 @@ def threeSum(nums: List) -> List:
     visited = []
     found = []
     for i in nums:
-        print("i: ", i, "found: ", found)
-        twosDict = {}
-        nums2 = nums[:]
-        nums2.remove(i)
-        for k in nums2[:-2]:
-            for j in nums2[k+1:]:
-                if [k,j] not in found:
-                    val = k + j
-
-                    newList = [k,j]
-                    # sort so we don't treat (-1,2) different from (2,-1)
-                    newList.sort()
-                    # if not in dict, add to dict
-                    if twosDict.get(val, 'None') == 'None':
-                        twosDict[val] = [newList]
-                    # if in dict, check if already a set:
-                    elif newList not in twosDict.get(val):
-                        twosDict[val].append(newList)
-                found.append([k,j])
-        '''
         if i not in visited:
-            if twosDict.get(0-i, 'None') != 'None':
-                for j in twosDict.get(0-i):
-                    j.append(i)
-                    j.sort()
-                    if j not in r:
-                        #print("j: ", j, ", r: ", r)
-                        r.append(j)
+            twosDict = {}
+            nums2 = nums[:]
+            nums2.remove(i)
+            for k in nums2[:-2]:
+                for j in nums2[k+1:]:
+                    if [k,j] not in found:
+                        val = k + j
+
+                        newList = [k,j]
+                        # sort so we don't treat (-1,2) different from (2,-1)
+                        newList.sort()
+                        # if not in dict, add to dict
+                        if twosDict.get(val, 'None') == 'None':
+                            twosDict[val] = [newList]
+                        # if in dict, check if already a set:
+                        elif newList not in twosDict.get(val):
+                            twosDict[val].append(newList)
+                        found.append([k,j])
+
+        if twosDict.get(0-i, 'None') != 'None':
+            for j in twosDict.get(0-i):
+                j.append(i)
+                j.sort()
+                if j not in r:
+                    #print("j: ", j, ", r: ", r)
+                    r.append(j)
         visited.append(i)
-        '''
 
     return r
 
