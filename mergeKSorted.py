@@ -58,6 +58,13 @@ def mergeKLists(lists):
     :type lists: List[Optional[ListNode]]
     :rtype: Optional[ListNode]
     """
+    print("lists: ", lists)
+    if len(lists) == 0:
+        head = ListNode(None)
+        return head
+    if (len(lists) == 1) and (len(lists[0]) == 0):
+        head = ListNode(None)
+        return head
     # build the lists, store heads in a List:
     llList = []
 
@@ -89,13 +96,13 @@ def mergeKLists(lists):
     # determine smallest,
     # create head node with smallest value,
     # increment position index, node, etc.
-    min = float('inf')
+    minN = float('inf')
     minIndex = 0
     for i in range(len(minList)):
-        if minList[i] < min:
-            min = minList[i]
+        if minList[i] < minN:
+            minN = minList[i]
             minIndex = i
-    head = ListNode(min)
+    head = ListNode(minN)
     nextNode = head
     if llList[minIndex].next != None:
         llList[minIndex] = llList[minIndex].next
@@ -106,13 +113,13 @@ def mergeKLists(lists):
         minList[i] = float('inf')
 
     while min(hindex) != float('inf'):
-        min = float('inf')
+        minN = float('inf')
         minIndex = 0
         for i in range(len(minList)):
-            if minList[i] < min:
-                min = minList[i]
+            if minList[i] < minN:
+                minN = minList[i]
                 minIndex = i
-                newNode = ListNode(min)
+                newNode = ListNode(minN)
                 nextNode.next = newNode
                 if llList[minIndex].next != None:
                     llList[minIndex] = llList[minIndex].next
