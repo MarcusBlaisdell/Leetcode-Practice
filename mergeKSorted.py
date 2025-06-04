@@ -115,20 +115,24 @@ def mergeKLists(lists):
     while min(hindex) != float('inf'):
         minN = float('inf')
         minIndex = 0
+        # get min value found so far:
         for i in range(len(minList)):
             if minList[i] < minN:
                 minN = minList[i]
                 minIndex = i
-                newNode = ListNode(minN)
-                print("minN: ", minN, ", newNode.val: ", newNode.val)
-                nextNode.next = newNode
-                if llList[minIndex].next != None:
-                    llList[minIndex] = llList[minIndex].next
-                    hindex[i] += 1
-                    minList[i] += 1
-                else:
-                    hindex[i] = float('inf')
-                    minList[i] = float('inf')
+        # create new node with min value,
+        # increment respective list pointer
+        newNode = ListNode(minN)
+        print("minN: ", minN, ", newNode.val: ", newNode.val)
+        nextNode.next = newNode
+        nextNode = nextNode.next
+        if llList[minIndex].next != None:
+            llList[minIndex] = llList[minIndex].next
+            hindex[i] += 1
+            minList[i] += 1
+        else:
+            hindex[i] = float('inf')
+            minList[i] = float('inf')
 
     return head
 
