@@ -120,6 +120,7 @@ def mergeKLists(lists):
                 minN = minList[i]
                 minIndex = i
                 newNode = ListNode(minN)
+                print("minN: ", minN, ", newNode.val: ", newNode.val)
                 nextNode.next = newNode
                 if llList[minIndex].next != None:
                     llList[minIndex] = llList[minIndex].next
