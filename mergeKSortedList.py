@@ -53,7 +53,6 @@ def mergeKLists(lists):
     :rtype: Optional[ListNode]
     """
     # handle empty lists:
-    print("lists: ", lists)
     if len(lists) == 0:
         return []
     if (len(lists) == 1) and (len(lists[0]) == 0):
@@ -84,8 +83,6 @@ def mergeKLists(lists):
                     curIndex = i
         ret.append(lists[curIndex][pointers[curIndex]])
         pointers[curIndex] += 1
-
-        print("ret: ", ret, ", pointers: ", pointers)
 
     return ret
 

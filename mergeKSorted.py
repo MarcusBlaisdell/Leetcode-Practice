@@ -43,6 +43,23 @@ Constraints:
     lists[i] is sorted in ascending order.
     The sum of lists[i].length will not exceed 10^4.
 
+Input look like:
+('lists: ',
+  [
+   ListNode{val: 1,
+            next: ListNode{val: 4,
+            next: ListNode{val: 5,
+            next: None}}},
+   ListNode{val: 1,
+            next: ListNode{val: 3,
+            next: ListNode{val: 4,
+            next: None}}},
+   ListNode{val: 2,
+            next: ListNode{val: 6,
+            next: None}}
+  ]
+)
+
 
 '''
 import time
