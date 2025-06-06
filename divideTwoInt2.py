@@ -60,15 +60,25 @@ def divide(dividend, divisor):
         # force both positive:
         dividend = abs(dividend)
         divisor = abs(divisor)
+        dr = divisor
 
-        if divisor == 2:
-            ans = dividend >> 1
-        elif divisor == 1:
-            ans = dividend
-        else:
-            while dividend >= divisor:
-                dividend = dividend - divisor
-                ans += 1
+        while dr < dividend:
+            if (dr + dr) < dividend:
+                dr = dr + dr
+                if ans == 0:
+                    ans += 2
+                else:
+                    ans += ans
+            else:
+                break
+
+        if ans > 0:
+            dividend = dividend - dr
+        print("Here, dividend: ", dividend)
+
+        while dividend >= divisor:
+            dividend = dividend - divisor
+            ans += 1
 
         ans = ans * sign
 
