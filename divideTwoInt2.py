@@ -62,42 +62,61 @@ def divide(dividend, divisor):
         divisor = abs(divisor)
         dr = divisor
 
-        while dr < dividend:
-            if (dr + dr) < dividend:
-                dr = dr + dr
-                if ans == 0:
-                    ans += 2
+        if divisor == 1:
+            ans = dividend
+        else:
+            while dividend >= divisor:
+                ansT = 0
+                if (dividend - dr) < dr:
+                    ans += 1
+                    dividend = dividend - dr
+                    if dividend == 0:
+                        ans += 1
                 else:
-                    ans += ans
-            else:
-                break
+                    while dr <= dividend:
+                        if (dr + dr) < dividend:
+                            dr = dr + dr
+                            if ansT == 0:
+                                ansT += 2
+                            else:
+                                ansT += ansT
+                        else:
+                            break
 
-        if ans > 0:
-            dividend = dividend - dr
-        print("Here, dividend: ", dividend)
+                    ans += ansT
 
-        while dividend >= divisor:
-            dividend = dividend - divisor
-            ans += 1
+                    if ans > 0:
+                        dividend = dividend - dr
+                    dr = divisor
 
         ans = ans * sign
 
         if ans > ((2**31) - 1):
             ans = ((2**31) - 1)
-        if ans < -2**31:
+        if ans <= -2**31:
             ans = -2**31
+        print("dividend: ", dividend, ", dr: ", dr)
         return ans
 
 def main() -> None:
     t1 = time.time()
 
+    '''
+    test = [[10, 3, 3],
+            [7, -3, -2],
+            [1, 1, 1],
+            [-2147483648, -1, 2147483647]]
+
+    '''
     test = [[10, 3, 3],
             [7, -3, -2],
             [1, 1, 1],
             [-2147483648, -1, 2147483647],
             [-2147483648, 1, -2147483648],
             [2147483647, 2, 1073741823],
-            [2147483647, 3, 715827882]]
+            [2147483647, 3, 715827882],
+            [-2147483648, 2, -1073741824]]
+
 
     for i in test:
         a = divide(i[0], i[1])
