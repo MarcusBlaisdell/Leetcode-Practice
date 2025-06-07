@@ -38,7 +38,9 @@ Constraints:
     -2^31 <= dividend, divisor <= 2^31 - 1
     divisor != 0
 
-
+994/994
+Runtime beats 100%
+Memory beats 13.96%
 '''
 import time
 
@@ -70,11 +72,9 @@ def divide(dividend, divisor):
                 if (dividend - dr) < dr:
                     ans += 1
                     dividend = dividend - dr
-                    if dividend == 0:
-                        ans += 1
                 else:
                     while dr <= dividend:
-                        if (dr + dr) < dividend:
+                        if (dr + dr) <= dividend:
                             dr = dr + dr
                             if ansT == 0:
                                 ansT += 2
@@ -95,11 +95,12 @@ def divide(dividend, divisor):
             ans = ((2**31) - 1)
         if ans <= -2**31:
             ans = -2**31
-        print("dividend: ", dividend, ", dr: ", dr)
         return ans
 
 def main() -> None:
     t1 = time.time()
+
+    #test = [[-2147483648, 2, -1073741824]]
 
     '''
     test = [[10, 3, 3],
@@ -116,7 +117,6 @@ def main() -> None:
             [2147483647, 2, 1073741823],
             [2147483647, 3, 715827882],
             [-2147483648, 2, -1073741824]]
-
 
     for i in test:
         a = divide(i[0], i[1])
