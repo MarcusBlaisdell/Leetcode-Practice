@@ -47,6 +47,40 @@ def searchRange(nums: List, target: int) -> List:
         :type target: int
         :rtype: List[int]
         """
+        def findLeft(s, rt):
+            lt = 0
+
+            while (nums[lt] < target) and (nums[rt] == target):
+                if (nums[lt] < target) and (nums[lt+1] == target):
+                    return lt
+                if (nums[lt] < target) and (nums[rt] == target):
+                    rt = s
+                    lt = (((rt - lt) // 2) + lt)
+                if (nums[lt] == target):
+                    rt = lt
+                    
+
+        if len(nums) == 0:
+            return [-1,-1]
+        # two binary searches
+        # Find first instance:
+        lt = 0
+        rt = len(nums) - 1
+
+        while lt < (rt - 1):
+            s = (((rt - lt) // 2) + lt)
+            if nums[s] == target:
+                lt = findLeft(s, rt)
+                rt = findRight(s, lt)
+            if nums[s] < target:
+                lt = ((rt - lt) // 2)
+            if nums[s] > target:
+                rt = ((rt - lt) // 2)
+
+        if nums[s] == target:
+            return [lt,rt]
+        else:
+            return [-1,-1]
 
 def main() -> None:
     t1 = time.time()
