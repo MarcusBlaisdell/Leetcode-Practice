@@ -96,13 +96,33 @@ def searchRange(nums: List, target: int) -> List:
                     lt = mid
 
 
-        if len(nums) < 2:
+        if len(nums) == 0:
             return [-1,-1]
+
+        if len(nums) == 1:
+            if nums[0] == target:
+                return [0,0]
+            else:
+                return [-1,-1]
+        if len(nums) == 2:
+            lt = rt = -1
+            if target in nums:
+                if nums[0] == target:
+                    lt = 0
+                else:
+                    lt = 1
+                if nums[1] == target:
+                    rt = 1
+                else:
+                    rt = 0
+            return [lt, rt]
+
         # two binary searches
         # Find first instance:
         lt = 0
         rt = len(nums) - 1
 
+        # This will work for list sizes > 2:
         while lt < (rt - 1):
             s = (((rt - lt) // 2) + lt)
             if nums[s] == target:
@@ -114,10 +134,7 @@ def searchRange(nums: List, target: int) -> List:
             if nums[s] > target:
                 rt = ((rt - lt) // 2)
 
-        if nums[s] == target:
-            return [lt,rt]
-        else:
-            return [-1,-1]
+        return [-1,-1]
 
 def main() -> None:
     t1 = time.time()
@@ -125,7 +142,12 @@ def main() -> None:
     input = [([5,7,7,8,8,10], 8, [3,4]),
             ([5,7,7,8,8,10], 6, [-1,-1]),
             ([], 0, [-1,-1]),
-            ([1], 0, [-1,-1])]
+            ([1], 0, [-1,-1]),
+            ([1], 1, [0,0]),
+            ([2,2], 0, [-1,-1]),
+            ([2,2], 2, [0, 1]),
+            ([1,3], 1, [0, 0]),
+            ([1,2,3], 1, [0, 0])]
 
     for i in input:
         a = searchRange(i[0], i[1])
