@@ -48,6 +48,15 @@ def searchRange(nums: List, target: int) -> List:
         :rtype: List[int]
         """
         def findLeft(s, rt):
+            '''
+            conditions:
+            lt < target, rt == target
+                if (nums[lt] < target) and (nums[lt + 1] == target):
+                    return lt
+            lt == target, rt == target
+                if (nums[lt] == target) and (nums[lt - 1] < target):
+                    return lt - 1
+            '''
             lt = 0
 
             while (nums[lt] < target) and (nums[rt] == target):
@@ -58,7 +67,7 @@ def searchRange(nums: List, target: int) -> List:
                     lt = (((rt - lt) // 2) + lt)
                 if (nums[lt] == target):
                     rt = lt
-                    
+
 
         if len(nums) == 0:
             return [-1,-1]
