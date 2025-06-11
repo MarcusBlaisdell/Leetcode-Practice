@@ -96,7 +96,7 @@ def searchRange(nums: List, target: int) -> List:
                     lt = mid
 
 
-        if len(nums) == 0:
+        if len(nums) < 2:
             return [-1,-1]
         # two binary searches
         # Find first instance:
@@ -124,7 +124,8 @@ def main() -> None:
 
     input = [([5,7,7,8,8,10], 8, [3,4]),
             ([5,7,7,8,8,10], 6, [-1,-1]),
-            ([], 0, [-1,-1])]
+            ([], 0, [-1,-1]),
+            ([1], 0, [-1,-1])]
 
     for i in input:
         a = searchRange(i[0], i[1])
