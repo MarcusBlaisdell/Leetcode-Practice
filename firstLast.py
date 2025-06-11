@@ -47,7 +47,7 @@ def searchRange(nums: List, target: int) -> List:
         :type target: int
         :rtype: List[int]
         """
-        def findLeft(s, rt):
+        def findLeft(s):
             '''
             conditions:
             lt < target, rt == target
@@ -58,15 +58,42 @@ def searchRange(nums: List, target: int) -> List:
                     return lt - 1
             '''
             lt = 0
+            rt = s
 
-            while (nums[lt] < target) and (nums[rt] == target):
+            while lt < rt:
                 if (nums[lt] < target) and (nums[lt+1] == target):
+                    return lt + 1
+                if (nums[lt] == target and nums[lt - 1] < target):
                     return lt
-                if (nums[lt] < target) and (nums[rt] == target):
-                    rt = s
-                    lt = (((rt - lt) // 2) + lt)
-                if (nums[lt] == target):
-                    rt = lt
+                mid = (((rt - lt) // 2) + lt)
+                if (nums[mid] < target):
+                    lt = mid
+                if (nums[mid] == target):
+                    rt = mid
+
+        def findRight(s):
+            '''
+            conditions:
+            lt < target, rt == target
+                if (nums[lt] < target) and (nums[lt + 1] == target):
+                    return lt
+            lt == target, rt == target
+                if (nums[lt] == target) and (nums[lt - 1] < target):
+                    return lt - 1
+            '''
+            lt = s
+            rt = len(nums) - 1
+
+            while lt < rt:
+                if (nums[rt] > target) and (nums[rt - 1] == target):
+                    return rt - 1
+                if (nums[rt] == target and nums[rt + 1] > target):
+                    return rt
+                mid = (((rt - lt) // 2) + lt)
+                if (nums[mid] > target):
+                    rt = mid
+                if (nums[mid] == target):
+                    lt = mid
 
 
         if len(nums) == 0:
@@ -79,8 +106,9 @@ def searchRange(nums: List, target: int) -> List:
         while lt < (rt - 1):
             s = (((rt - lt) // 2) + lt)
             if nums[s] == target:
-                lt = findLeft(s, rt)
-                rt = findRight(s, lt)
+                lt = findLeft(s)
+                rt = findRight(s)
+                return [lt, rt]
             if nums[s] < target:
                 lt = ((rt - lt) // 2)
             if nums[s] > target:
