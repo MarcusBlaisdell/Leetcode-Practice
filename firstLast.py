@@ -36,7 +36,10 @@ Constraints:
     nums is a non-decreasing array.
     -10^9 <= target <= 10^9
 
+88/88
 
+Runtime beats 100%
+Memory beats 30.21%
 '''
 import time
 from typing import List
@@ -57,6 +60,8 @@ def searchRange(nums: List, target: int) -> List:
                 if (nums[lt] == target) and (nums[lt - 1] < target):
                     return lt - 1
             '''
+            if nums[0] == target:
+                return 0
             lt = 0
             rt = s
 
@@ -81,6 +86,8 @@ def searchRange(nums: List, target: int) -> List:
                 if (nums[lt] == target) and (nums[lt - 1] < target):
                     return lt - 1
             '''
+            if nums[len(nums) - 1] == target:
+                return (len(nums) - 1)
             lt = s
             rt = len(nums) - 1
 
@@ -122,17 +129,29 @@ def searchRange(nums: List, target: int) -> List:
         lt = 0
         rt = len(nums) - 1
 
+        if nums[rt] == target:
+            lt = findLeft(rt)
+            rt = findRight(rt)
+            return [lt, rt]
         # This will work for list sizes > 2:
-        while lt < (rt - 1):
+        update = 1
+        #while lt < (rt - 1):
+        while update == 1:
+            update = 0
             s = (((rt - lt) // 2) + lt)
+            print("lt: ", lt, ", rt: ", rt, ", s: ", s)
             if nums[s] == target:
                 lt = findLeft(s)
                 rt = findRight(s)
                 return [lt, rt]
             if nums[s] < target:
-                lt = ((rt - lt) // 2)
+                if (((rt - lt) // 2) + lt) != lt:
+                    lt = ((rt - lt) // 2) + lt
+                    update = 1
             if nums[s] > target:
-                rt = ((rt - lt) // 2)
+                if (((rt - lt) // 2) + lt) != rt:
+                    rt = ((rt - lt) // 2) + lt
+                    update = 1
 
         return [-1,-1]
 
@@ -147,7 +166,8 @@ def main() -> None:
             ([2,2], 0, [-1,-1]),
             ([2,2], 2, [0, 1]),
             ([1,3], 1, [0, 0]),
-            ([1,2,3], 1, [0, 0])]
+            ([1,2,3], 1, [0, 0]),
+            ([1,2,3], 3, [2, 2])]
 
     for i in input:
         a = searchRange(i[0], i[1])
