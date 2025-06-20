@@ -54,17 +54,19 @@ def jump(nums: List) -> int:
         j = 0
 
         while i <= len(nums):
-            for k in range(nums[i]):
-                m = 0
-                if (i + nums[i + k]) >= (len(nums) - 1):
-                    return j + 1
-                else:
-                    if (i + k + nums[i + k]) > m:
-                        m = i + k + nums[i + k]
-            if m == i:
+            if i >= len(nums) - 1:
+                return j + 1
+            if i + nums[i] >= (len(nums) - 1):
                 return j + 1
             else:
-                i = m
+                for k in range(nums[i]):
+                    m = 0
+                    if (i + k + nums[i + k]) > m:
+                        m = i + k + nums[i + k]
+                if m == i:
+                    return j + 1
+                else:
+                    i = m
             j += 1
 
         return j
@@ -73,11 +75,12 @@ def main() -> None:
     t1 = time.time()
     input = [([2,3,1,1,4], 2),
             ([2,3,0,1,4], 2),
-            ([0], 1),
+            ([0], 0),
             ([1,2], 1),
             ([2,0,2,0,1], 2),
             ([1,2,3], 2),
-            ([1,2,3,4,5], 3)]
+            ([1,2,3,4,5], 3),
+            ([3,4,3,2,5,4,3],3)]
 
     for i in input:
         a = jump(i[0])
