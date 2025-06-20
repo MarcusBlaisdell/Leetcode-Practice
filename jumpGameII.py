@@ -41,33 +41,49 @@ Constraints:
 
 '''
 from typing import List
+import time
 
 def jump(nums: List) -> int:
         """
         :type nums: List[int]
         :rtype: int
         """
-        j = 0
+        if (len(nums) == 1):
+            return 0
         i = 0
+        j = 0
 
-        while i < len(nums):
-            #print("i: ", i)
-            #print("max(nums[i:i+nums[i]]): ", max(nums[i:i+nums[i]]))
-            if i + (max(nums[i:i+nums[i]])) >= len(nums):
+        while i <= len(nums):
+            for k in range(nums[i]):
+                m = 0
+                if (i + nums[i + k]) >= (len(nums) - 1):
+                    return j + 1
+                else:
+                    if (i + k + nums[i + k]) > m:
+                        m = i + k + nums[i + k]
+            if m == i:
                 return j + 1
             else:
-                i = i + (max(nums[i:i+nums[i]]))
-                j += 1
+                i = m
+            j += 1
 
         return j
 
 def main() -> None:
+    t1 = time.time()
     input = [([2,3,1,1,4], 2),
-            ([2,3,0,1,4], 2)]
+            ([2,3,0,1,4], 2),
+            ([0], 1),
+            ([1,2], 1),
+            ([2,0,2,0,1], 2),
+            ([1,2,3], 2),
+            ([1,2,3,4,5], 3)]
 
     for i in input:
         a = jump(i[0])
         print("s/b: ", i[1], ", is: ", a)
+
+    print("Total time: ", time.time() - t1)
 
 if __name__=='__main__':
     main()
