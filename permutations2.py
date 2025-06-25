@@ -40,9 +40,27 @@ def permute(nums: List) -> List:
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        r = [] # return list
+        if len(nums) == 1:
+            return nums
 
-        return r 
+        r = []
+        def helpPermute(hNums: List) -> int:
+            r = []
+            if len(hNums) > 1:
+                b = hNums[:]
+                b.remove(hNums[0])
+                a = helpPermute(b)
+            else:
+                r.append(hNums[0])
+            return r
+
+        for i in range(len(nums)):
+            b = nums[:]
+            b.remove(nums[i])
+            a = helpPermute(b)
+            r.append(a)
+
+        return r
 
 def main() -> None:
     t1 = time.time()
