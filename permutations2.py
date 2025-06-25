@@ -32,3 +32,31 @@ Constraints:
     All the integers of nums are unique.
 
 '''
+import time
+from typing import List
+
+def permute(nums: List) -> List:
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        r = [] # return list
+
+        return r 
+
+def main() -> None:
+    t1 = time.time()
+
+    input = [([1,2,3], [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]),
+            ([0,1], [[0,1],[1,0]]),
+            ([1], [[1]])
+            ]
+
+    for i in input:
+        a = permute(i[0])
+        print("s/b: ", i[1], ", is: ", a)
+
+    print("total time: ", time.time() - t1 )
+
+if __name__=='__main__':
+    main()
