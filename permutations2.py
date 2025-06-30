@@ -31,6 +31,8 @@ Constraints:
     -10 <= nums[i] <= 10
     All the integers of nums are unique.
 
+Time complexity beats 100%
+Memory complexity beats 15.86%
 '''
 import time
 from typing import List
@@ -40,27 +42,26 @@ def permute(nums: List) -> List:
         :type nums: List[int]
         :rtype: List[List[int]]
         """
+        a = []
+
+        # base case:
         if len(nums) == 1:
-            return nums
+            return [[nums[0]]] # making it a List of a List also works
 
-        r = []
-        def helpPermute(hNums: List) -> int:
-            r = []
-            if len(hNums) > 1:
-                b = hNums[:]
-                b.remove(hNums[0])
-                a = helpPermute(b)
-            else:
-                r.append(hNums[0])
-            return r
-
+        # otherwise, for each character, remove it from the list,
+        # and pass the remainder to the recursive call:
         for i in range(len(nums)):
-            b = nums[:]
-            b.remove(nums[i])
-            a = helpPermute(b)
-            r.append(a)
+            c = nums.pop(0)
+            p = permute(nums)
 
-        return r
+            # build the list from the returns from the
+            # recursive calls:
+            for x in p:
+                x.append(c)
+            a.extend(p)
+            nums.append(c)
+
+        return a
 
 def main() -> None:
     t1 = time.time()
