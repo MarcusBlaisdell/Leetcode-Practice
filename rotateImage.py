@@ -62,6 +62,35 @@ def rotate(matrix: List[List[int]]) -> None:
         :rtype: None Do not return anything, modify matrix
          in-place instead.
         """
+        '''
+        top row:
+        (F, F:F, L), (F, F + 1:F, L - 1), ...
+        right column:
+        (F, L:F, F), (F + 1, L:F, F + 1), ...
+        bottom row:
+        (L, L:F, L), (L, L - 1: F + 1, L), ...
+        left column:
+        (L, F:L, L), (L - 1, F:L, L - 1), ...
+        '''
+
+        '''
+        store val/each pos
+        replace val/each pos
+        '''
+        f = 0 # initial first position
+        l = len(matrix[0]) - 1 # initial last position
+
+        while f < l:
+            top = matrix[f][f]
+            right = matrix[f][l]
+            bottom = matrix[l][l]
+            left = matrix[l][f]
+            tmp = matrix[f][f]
+            matrix[f][f] = matrix[l][f]
+            matrix[l][f] = matrix[l][l]
+            matrix[l][l] = matrix[f][l]
+            matrix[f][l] = tmp
+            f += 1
 
 def main() -> None:
     t1 = time.time()
