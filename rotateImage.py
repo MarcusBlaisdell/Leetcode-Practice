@@ -51,7 +51,9 @@ Constraints:
     1 <= n <= 20
     -1000 <= matrix[i][j] <= 1000
 
-
+21/21 test cases
+Runtime beats 100%
+Memory beats 86.89%
 '''
 import time
 from typing import List
@@ -77,20 +79,28 @@ def rotate(matrix: List[List[int]]) -> None:
         store val/each pos
         replace val/each pos
         '''
-        f = 0 # initial first position
-        l = len(matrix[0]) - 1 # initial last position
+        fo = 0 # initial first outer/inner position
+        lo = len(matrix[0]) - 1 # initial last outer/inner position
 
-        while f < l:
-            top = matrix[f][f]
-            right = matrix[f][l]
-            bottom = matrix[l][l]
-            left = matrix[l][f]
-            tmp = matrix[f][f]
-            matrix[f][f] = matrix[l][f]
-            matrix[l][f] = matrix[l][l]
-            matrix[l][l] = matrix[f][l]
-            matrix[f][l] = tmp
-            f += 1
+        while fo < lo:
+            fi = fo
+            li = lo
+            while fi < lo:
+                '''
+                top = matrix[fo][fi]
+                right = matrix[fi][lo]
+                bottom = matrix[lo][li]
+                left = matrix[li][fo]
+                '''
+                tmp = matrix[fo][fi] # tmp = top
+                matrix[fo][fi] = matrix[li][fo] # top = left
+                matrix[li][fo] = matrix[lo][li] # left = bottom
+                matrix[lo][li] = matrix[fi][lo] # bottom = right
+                matrix[fi][lo] = tmp # right = tmp
+                fi += 1
+                li -= 1
+            fo += 1
+            lo -= 1
 
 def main() -> None:
     t1 = time.time()
@@ -98,11 +108,14 @@ def main() -> None:
     input = [([[1,2,3],[4,5,6],[7,8,9]],
             [[7,4,1],[8,5,2],[9,6,3]]),
             ([[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]],
-            [[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]])]
+            [[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]),
+            ([[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]],
+            [[13,9,5,1],[14,10,6,2],[15,11,7,3],[16,12,8,4]])]
 
     for i in input:
         rotate(i[0])
-        print("s/b: ", i[1], ", is: ", i[0])
+        print("s/b: ", i[1])
+        print(", is: ", i[0])
 
     print("Total time: ", time.time() - t1)
 
