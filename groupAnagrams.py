@@ -46,6 +46,12 @@ Constraints:
 from typing import List
 import time
 
+def isAnagram(str1: str, str2: str) -> Bool:
+    for i in str1:
+        if str1.count(i) != str2.count(i):
+            return False
+    return True
+
 def groupAnagrams(strs: List[str]) -> List[List[str]]:
         """
         :type strs: List[str]
@@ -56,7 +62,13 @@ def groupAnagrams(strs: List[str]) -> List[List[str]]:
         if len(strs) == 1:
             r.append(strs)
         else:
-            
+            '''
+            while there are elements in the list,
+            remove first element and add to new list
+            check for anagagrams among remaining,
+            remove elements as they are found
+            and add to new list
+            '''
 
         return r
 
